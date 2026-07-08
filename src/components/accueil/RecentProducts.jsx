@@ -16,21 +16,18 @@ function RecentProducts() {
             <p className="font-medium text-white">Produit A</p>
             <p className="text-sm text-slate-400">84 unités • Entrepôt principal</p>
           </div>
-          <span className="rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-medium text-emerald-300">Disponible</span>
         </div>
         <div className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-950/70 px-4 py-3">
           <div>
             <p className="font-medium text-white">Produit C</p>
             <p className="text-sm text-slate-400">32 unités • Entrepôt secondaire</p>
           </div>
-          <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-xs font-medium text-amber-300">À surveiller</span>
         </div>
         <div className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-950/70 px-4 py-3">
           <div>
             <p className="font-medium text-white">Produit D</p>
             <p className="text-sm text-slate-400">59 unités • Entrepôt nord</p>
           </div>
-          <span className="rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-medium text-emerald-300">Disponible</span>
         </div>
       </div>
     </div>

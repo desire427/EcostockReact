@@ -43,7 +43,6 @@ function DetailEntrepots() {
                 <DetailWarehouseInfo
                     title="Informations générales"
                     subtitle="Vue d’ensemble de l’installation et de ses performances."
-                    statusLabel="Actif"
                     items={[
                         { label: 'Nom', value: 'Entrepôt principal' },
                         { label: 'Localisation', value: 'Quartier central' },

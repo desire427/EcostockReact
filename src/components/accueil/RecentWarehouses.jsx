@@ -14,21 +14,18 @@ function RecentWarehouses() {
         <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
           <div className="flex items-center justify-between">
             <p className="font-medium text-white">Entrepôt principal</p>
-            <span className="text-sm text-emerald-300">Actif</span>
           </div>
           <p className="mt-1 text-sm text-slate-400">Quartier central • Capacité 4 200 m²</p>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
           <div className="flex items-center justify-between">
             <p className="font-medium text-white">Entrepôt secondaire</p>
-            <span className="text-sm text-slate-300">En contrôle</span>
           </div>
           <p className="mt-1 text-sm text-slate-400">Zone industrielle • Capacité 3 100 m²</p>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
           <div className="flex items-center justify-between">
             <p className="font-medium text-white">Entrepôt nord</p>
-            <span className="text-sm text-emerald-300">Actif</span>
           </div>
           <p className="mt-1 text-sm text-slate-400">Périphérie • Capacité 2 500 m²</p>
         </div>
