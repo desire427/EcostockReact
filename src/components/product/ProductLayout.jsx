@@ -6,8 +6,8 @@ function ProductLayout({ children }) {
       <Sidebar
         subtitle="Tableau de bord logistique"
         links={[
-          { label: 'Produits', to: '/produits.html', active: true, internal: true },
-          { label: 'Entrepôts', to: '/entrepots.html', active: false, internal: false },
+          { label: 'Produits', to: '/produits', active: true, internal: true },
+          { label: 'Entrepôts', to: '/entrepots', active: false, internal: true },
           { label: 'Rapports', to: '#', active: false, internal: false },
           { label: 'Paramètres', to: '#', active: false, internal: false },
         ]}

@@ -33,9 +33,9 @@ function Sidebar({ subtitle, links }) {
         <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Session</p>
         <p className="mt-2 font-medium text-white">Administrateur</p>
         <p className="mt-1 text-sm text-slate-400">Gestion des stocks</p>
-        <a href="login.html" className="mt-4 inline-flex rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-200 transition hover:bg-slate-800">
+        <Link to="/login" className="mt-4 inline-flex rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-200 transition hover:bg-slate-800">
           Se déconnecter
-        </a>
+        </Link>
       </div>
     </aside>
   )

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function ProductHeader() {
   return (
     <header className="mb-6 rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-black/20">
@@ -10,9 +12,9 @@ function ProductHeader() {
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <a href="entrepots.html" className="rounded-xl border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800">
+          <Link to="/entrepots" className="rounded-xl border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800">
             Voir les entrepôts
-          </a>
+          </Link>
           <button className="rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-slate-900 transition hover:bg-slate-200">
             Ajouter un produit
           </button>
