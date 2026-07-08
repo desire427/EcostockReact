@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Deconnexion from '../bouton/deconnexion.jsx';
 
 function AccueilSidebar() {
   return (
@@ -24,9 +25,7 @@ function AccueilSidebar() {
         <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Logistique</p>
         <p className="mt-2 font-medium text-white">Suivi opérationnel</p>
         <p className="mt-1 text-sm text-slate-400">Vue globale sur vos stocks et entrepôts.</p>
-        <NavLink to="/login" className="mt-4 inline-flex rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-200 transition hover:bg-slate-800">
-          Se déconnecter
-        </NavLink>
+        <Deconnexion />
       </div>
     </aside>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Connexion from '../bouton/connexion.jsx';
 
 function Login() {
   const navigate = useNavigate();
@@ -74,12 +75,7 @@ function Login() {
                 <a href="#" className="font-medium text-slate-700 transition hover:text-slate-900">Mot de passe oublié ?</a>
               </div>
 
-              <button
-                type="submit"
-                className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-              >
-                Se connecter
-              </button>
+              <Connexion />
             </form>
 
             <div className="mt-8 border-t border-slate-200 pt-6 text-sm text-slate-600">

@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom'
+import Retour from '../bouton/retour.jsx'
+import Modifier from '../bouton/modifier.jsx'
+import Supprimer from '../bouton/supprimer.jsx'
 
 function DetailHeader() {
   return (
@@ -9,12 +12,9 @@ function DetailHeader() {
         <p className="mt-2 text-sm text-slate-400">Informations détaillées et état actuel du produit dans l’inventaire.</p>
       </div>
       <div className="flex flex-wrap gap-3">
-        <Link to="/produits.html" className="rounded-xl border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800">
-          Retour
-        </Link>
-        <button className="rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-slate-900 transition hover:bg-slate-200">
-          Modifier
-        </button>
+        <Retour to="/produits.html" />
+        <Modifier />
+        <Supprimer />
       </div>
     </header>
   )

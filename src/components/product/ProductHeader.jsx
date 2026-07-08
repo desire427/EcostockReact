@@ -1,4 +1,8 @@
 import { Link } from 'react-router-dom'
+import VoirProduitEntrepot from '../bouton/voirproduitentrepot.jsx'
+import Ajouter from '../bouton/ajouter.jsx'
+import Modifier from '../bouton/modifier.jsx'
+import Supprimer from '../bouton/supprimer.jsx'
 
 function ProductHeader() {
   return (
@@ -12,12 +16,8 @@ function ProductHeader() {
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <Link to="/entrepots" className="rounded-xl border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800">
-            Voir les entrepôts
-          </Link>
-          <button className="rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-slate-900 transition hover:bg-slate-200">
-            Ajouter un produit
-          </button>
+          <VoirProduitEntrepot to="/entrepots" label="Voir les entrepôts" />
+          <Ajouter type="produit" />
         </div>
       </div>
     </header>

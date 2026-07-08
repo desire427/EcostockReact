@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import WarehousePageShell from './WarehousePageShell';
+import Retour from '../bouton/retour.jsx';
+import Modifier from '../bouton/modifier.jsx';
+import Supprimer from '../bouton/supprimer.jsx';
 import WarehouseSidebar from './WarehouseSidebar';
 import WarehouseHeader from './WarehouseHeader';
 import DetailWarehouseInfo from './DetailWarehouseInfo';
@@ -28,12 +31,11 @@ function DetailEntrepots() {
                 title="Entrepôt principal"
                 description="Informations complètes sur la capacité, la localisation et les produits actuellement stockés."
                 actions={
-                    <>
-                        <Link to="/entrepots" className="rounded-xl border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800">
-                            Retour
-                        </Link>
-                        
-                    </>
+                    <div className="flex items-center gap-3">
+                        <Retour to="/entrepots" />
+                        <Modifier />
+                        <Supprimer />
+                    </div>
                 }
             />
 

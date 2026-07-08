@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Deconnexion from '../bouton/deconnexion.jsx';
 
 function Sidebar(){
     return (
@@ -17,7 +18,7 @@ function Sidebar(){
             <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Logistique</p>
             <p className="mt-2 font-medium text-white">Suivi des stocks</p>
-            <Link to="/login" className="mt-4 inline-flex rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-200 transition hover:bg-slate-800">Se déconnecter</Link>
+            <Deconnexion />
             </div>
         </aside>
     )

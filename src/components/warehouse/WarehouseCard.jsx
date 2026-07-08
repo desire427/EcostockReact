@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import VoirDetails from '../bouton/voirdetails.jsx';
 
 function WarehouseCard({ title, location, capacity, occupation, responsable, products, actionLabel, actionHref }) {
   return (
@@ -30,12 +31,7 @@ function WarehouseCard({ title, location, capacity, occupation, responsable, pro
             <p className="mt-1 font-medium text-white">{products}</p>
           </div>
         </div>
-        <Link
-          to={actionHref}
-          className="inline-flex rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:bg-slate-800"
-        >
-          {actionLabel}
-        </Link>
+        <VoirDetails to={actionHref} label={actionLabel} variant="secondary" />
       </div>
     </article>
   );

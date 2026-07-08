@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import VoirDetails from '../bouton/voirdetails.jsx'
 
 function ProductCard({ title, category, label, labelClass, quantity, expiration, warehouse }) {
   return (
@@ -26,9 +27,7 @@ function ProductCard({ title, category, label, labelClass, quantity, expiration,
             <span className="font-medium text-slate-200">{warehouse}</span>
           </div>
         </div>
-        <Link to="/detail_produits.html" className="mt-5 inline-flex rounded-lg bg-white px-4 py-2 text-sm font-medium text-slate-900 transition hover:bg-slate-200">
-          Voir le détail
-        </Link>
+        <VoirDetails to="/detail_produits.html" variant="primary" />
       </div>
     </div>
   )

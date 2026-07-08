@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import WarehousePageShell from './WarehousePageShell';
+import Ajouter from '../bouton/ajouter.jsx';
+import VoirProduitEntrepot from '../bouton/voirproduitentrepot.jsx';
+import Modifier from '../bouton/modifier.jsx';
+import Supprimer from '../bouton/supprimer.jsx';
 import WarehouseSidebar from './WarehouseSidebar';
 import WarehouseHeader from './WarehouseHeader';
 import StatCard from './StatCard';
@@ -31,19 +35,8 @@ function Entrepots() {
                 description="Suivi de la capacité, de l’emplacement et du niveau d’occupation de chaque site de stockage."
                 actions={
                     <div className="flex items-center gap-3">
-                        <Link
-                            to="/entrepots/ajouter"
-                            className="rounded-xl bg-emerald-600 px-2 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
-                        >
-                            + Ajouter un entrepôt
-                        </Link>
-
-                        <Link
-                            to="/produits"
-                            className="rounded-xl border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800"
-                        >
-                            Voir les produits
-                        </Link>
+                        <VoirProduitEntrepot to="/produits" label="Voir les produits" />
+                        <Ajouter type="entrepot" to="/entrepots/ajouter" />
                     </div>
                 }
 
