@@ -1,8 +1,14 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate('/accueil');
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-200">
@@ -35,7 +41,7 @@ function Login() {
               </p>
             </div>
 
-            <form className="space-y-5" method="post" action="#">
+            <form className="space-y-5" onSubmit={handleSubmit}>
               <div>
                 <label for="username" className="mb-2 block text-sm font-medium text-slate-700">Nom d'utilisateur</label>
                 <input

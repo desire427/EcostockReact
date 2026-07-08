@@ -1,11 +1,11 @@
 import { BrowserRouter } from 'react-router-dom'
-import WarehouseRoutes from './components/warehouse/WarehouseRoutes.jsx'
+import AccueilRoutes from './components/accueil/AccueilRoutes.jsx'
 import './App.css'
 
 function App() {
   return (
     <BrowserRouter>
-      <WarehouseRoutes />
+      <AccueilRoutes />
     </BrowserRouter>
   )
 }
