@@ -11,6 +11,7 @@ function Entrepots() {
         <WarehouseSidebar
             subtitle="Gestion des entrepôts"
             navItems={[
+                { label: 'Accueil', href: '/accueil', active: false },
                 { label: 'Produits', href: '/produits', active: false },
                 { label: 'Entrepôts', href: '/entrepots', active: true },
                 { label: 'Rapports', href: '#', active: false },

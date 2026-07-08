@@ -11,6 +11,7 @@ function DetailEntrepots() {
         <WarehouseSidebar
             subtitle="Détail entrepôt"
             navItems={[
+                { label: 'Accueil', href: '/accueil', active: false },
                 { label: 'Produits', href: '/produits', active: false },
                 { label: 'Entrepôts', href: '/entrepots', active: true },
             ]}
