@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import AjouterEn from '../formulaire/ajouter_en.jsx';
+import AjouterPro from '../formulaire/ajouter_pro.jsx';
 
 function Ajouter({ type = 'produit', to, onClick, label, children }) {
+  const [isOpen, setIsOpen] = useState(false);
   const isWarehouse = type === 'entrepot';
   const defaultLabel = isWarehouse ? '+ Ajouter un entrepôt' : 'Ajouter un produit';
   const className = isWarehouse
@@ -10,18 +13,31 @@ function Ajouter({ type = 'produit', to, onClick, label, children }) {
 
   const content = children || label || defaultLabel;
 
-  if (to) {
-    return (
-      <Link to={to} className={className} onClick={onClick}>
-        {content}
-      </Link>
-    );
-  }
+  const handleButtonClick = (e) => {
+    setIsOpen(true);
+    if (onClick) onClick(e);
+  };
 
   return (
-    <button type="button" className={className} onClick={onClick}>
-      {content}
-    </button>
+    <>
+      {to ? (
+        <Link to={to} className={className} onClick={onClick}>
+          {content}
+        </Link>
+      ) : (
+        <button type="button" className={className} onClick={handleButtonClick}>
+          {content}
+        </button>
+      )}
+
+      {isOpen && (
+        isWarehouse ? (
+          <AjouterEn onClose={() => setIsOpen(false)} />
+        ) : (
+          <AjouterPro onClose={() => setIsOpen(false)} />
+        )
+      )}
+    </>
   );
 }
 

@@ -5,26 +5,14 @@ import Ajouter from '../bouton/ajouter.jsx';
 import VoirProduitEntrepot from '../bouton/voirproduitentrepot.jsx';
 import Modifier from '../bouton/modifier.jsx';
 import Supprimer from '../bouton/supprimer.jsx';
-import WarehouseSidebar from './WarehouseSidebar';
+import Sidebar from '../sidebar/sidebar.jsx';
 import WarehouseHeader from './WarehouseHeader';
 import StatCard from './StatCard';
 import WarehouseCard from './WarehouseCard';
 
 function Entrepots() {
     const sidebar = (
-        <WarehouseSidebar
-            subtitle="Gestion des entrepôts"
-            navItems={[
-                { label: 'Accueil', href: '/accueil', active: false },
-                { label: 'Produits', href: '/produits', active: false },
-                { label: 'Entrepôts', href: '/entrepots', active: true },
-                { label: 'Rapports', href: '#', active: false },
-                { label: 'Paramètres', href: '#', active: false },
-            ]}
-            footerTitle="Opérations"
-            footerDescription="Logistique"
-            footerActionLabel="Se déconnecter"
-        />
+        <Sidebar />
     );
 
     return (
@@ -35,8 +23,7 @@ function Entrepots() {
                 description="Suivi de la capacité, de l’emplacement et du niveau d’occupation de chaque site de stockage."
                 actions={
                     <div className="flex items-center gap-3">
-                        <VoirProduitEntrepot to="/produits" label="Voir les produits" />
-                        <Ajouter type="entrepot" to="/entrepots/ajouter" />
+                        <Ajouter type="entrepot" />
                     </div>
                 }
 

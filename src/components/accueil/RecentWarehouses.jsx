@@ -6,7 +6,6 @@ function RecentWarehouses() {
       <div className="mb-5 flex items-center justify-between">
         <div>
           <h3 className="text-xl font-semibold text-white">Derniers entrepôts</h3>
-          <p className="mt-1 text-sm text-slate-400">Derniers sites enregistrés selon le modèle Warehouse</p>
         </div>
         <span className="rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-slate-200">3 sites</span>
       </div>

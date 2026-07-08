@@ -122,7 +122,6 @@ const ChartsSection = () => {
             <h3 className="text-xl font-semibold text-white">Volume stocké par mois</h3>
             <p className="mt-1 text-sm text-slate-400">Volume stocké par mois sur les 6 derniers mois</p>
           </div>
-          <span className="rounded-full bg-emerald-500/15 px-3 py-1 text-sm font-medium text-emerald-300">+12%</span>
         </div>
         <div className="mt-4 h-[250px]"><canvas ref={barChartRef}></canvas></div>
       </div>
@@ -134,7 +133,6 @@ const ChartsSection = () => {
             <h3 className="text-xl font-semibold text-white">Capacité globale</h3>
             <p className="mt-1 text-sm text-slate-400">Part de capacité occupée par entrepôt</p>
           </div>
-          <span className="rounded-full bg-emerald-500/15 px-3 py-1 text-sm font-medium text-emerald-300">78%</span>
         </div>
         <div className="mt-4 flex h-[250px] justify-center"><canvas ref={pieChartRef}></canvas></div>
       </div>

@@ -6,7 +6,6 @@ function RecentProducts() {
       <div className="mb-5 flex items-center justify-between">
         <div>
           <h3 className="text-xl font-semibold text-white">Produits récents</h3>
-          <p className="mt-1 text-sm text-slate-400">Derniers enregistrements issus du modèle Product</p>
         </div>
         <span className="rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-slate-200">5 derniers</span>
       </div>

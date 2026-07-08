@@ -19,17 +19,6 @@ function DetailSummary() {
         </div>
       </div>
 
-      <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 shadow-2xl shadow-black/20">
-        <h3 className="text-lg font-semibold text-white">Actions rapides</h3>
-        <div className="mt-4 space-y-3">
-          <button className="w-full rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-slate-900 transition hover:bg-slate-200">
-            Réapprovisionner
-          </button>
-          <button className="w-full rounded-xl border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800">
-            Historique
-          </button>
-        </div>
-      </div>
     </div>
   )
 }

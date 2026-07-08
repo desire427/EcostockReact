@@ -1,6 +1,6 @@
 import React from 'react';
 import AccueilLayout from './AccueilLayout';
-import AccueilSidebar from './AccueilSidebar';
+import Sidebar from '../sidebar/sidebar.jsx';
 import AccueilHeader from './AccueilHeader';
 import StatCard from './StatCard';
 import ChartsSection from './ChartsSection';
@@ -9,14 +9,13 @@ import RecentWarehouses from './RecentWarehouses';
 
 function Accueil() {
   return (
-    <AccueilLayout sidebar={<AccueilSidebar />}>
+    <AccueilLayout sidebar={<Sidebar />}>
       <AccueilHeader />
 
-      <section className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Entrepôts actifs" value="4" detail="+1 cette semaine" />
-        <StatCard label="Produits enregistrés" value="145" detail="Basé sur le modèle Product" />
-        <StatCard label="Stock faible" value="12" detail="À réapprovisionner" />
-        <StatCard label="Taux d'occupation" value="78%" detail="Capacité globale utilisée" accent />
+      <section className="mb-6 grid gap-4 md:grid-cols-3 xl:grid-cols-3">
+        <StatCard label="Produits enregistrés" value="145" />
+        <StatCard label="Stock faible" value="12" />
+        <StatCard label="Taux d'occupation" value="78%" />
       </section>
 
       <ChartsSection />

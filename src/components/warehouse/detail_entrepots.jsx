@@ -4,24 +4,14 @@ import WarehousePageShell from './WarehousePageShell';
 import Retour from '../bouton/retour.jsx';
 import Modifier from '../bouton/modifier.jsx';
 import Supprimer from '../bouton/supprimer.jsx';
-import WarehouseSidebar from './WarehouseSidebar';
+import Sidebar from '../sidebar/sidebar.jsx';
 import WarehouseHeader from './WarehouseHeader';
 import DetailWarehouseInfo from './DetailWarehouseInfo';
 import WarehouseProductsList from './WarehouseProductsList';
 
 function DetailEntrepots() {
     const sidebar = (
-        <WarehouseSidebar
-            subtitle="Détail entrepôt"
-            navItems={[
-                { label: 'Accueil', href: '/accueil', active: false },
-                { label: 'Produits', href: '/produits', active: false },
-                { label: 'Entrepôts', href: '/entrepots', active: true },
-            ]}
-            footerTitle="Logistique"
-            footerDescription="Suivi des stocks"
-            footerActionLabel="Se déconnecter"
-        />
+        <Sidebar />
     );
 
     return (
@@ -33,8 +23,8 @@ function DetailEntrepots() {
                 actions={
                     <div className="flex items-center gap-3">
                         <Retour to="/entrepots" />
-                        <Modifier />
-                        <Supprimer />
+                        <Modifier type="entrepot" />
+                        <Supprimer type="entrepot" />
                     </div>
                 }
             />

@@ -13,8 +13,8 @@ function DetailHeader() {
       </div>
       <div className="flex flex-wrap gap-3">
         <Retour to="/produits.html" />
-        <Modifier />
-        <Supprimer />
+        <Modifier type="produit" />
+        <Supprimer type="produit" />
       </div>
     </header>
   )

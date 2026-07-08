@@ -4,7 +4,6 @@ import VoirDetails from '../bouton/voirdetails.jsx'
 function ProductCard({ title, category, label, labelClass, quantity, expiration, warehouse }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950">
-      <div className="h-36 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-950"></div>
       <div className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div>

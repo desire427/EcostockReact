@@ -17,4 +17,4 @@ function ProductStats() {
   )
 }
 
-export default ProductStats
+export default ProductStats;

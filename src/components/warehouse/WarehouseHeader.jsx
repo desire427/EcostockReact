@@ -5,9 +5,7 @@ function WarehouseHeader({ eyebrow, title, description, actions }) {
     <header className="mb-6 rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-black/20">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="text-sm uppercase tracking-[0.25em] text-slate-500">{eyebrow}</p>
           <h2 className="mt-2 text-3xl font-semibold text-white">{title}</h2>
-          <p className="mt-2 max-w-2xl text-sm text-slate-400">{description}</p>
         </div>
         {actions && <div className="flex flex-wrap gap-3">{actions}</div>}
       </div>
