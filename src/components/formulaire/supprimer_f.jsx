@@ -1,7 +1,8 @@
 import React from 'react';
 
 function SupprimerF({ type = 'produit', onClose }) {
-  const isProduct = type === 'produit';
+  const normalizedType = String(type || '').toLowerCase().trim();
+  const isProduct = ['produit', 'product', 'produits'].includes(normalizedType);
 
   const handleDelete = () => {
     // Logique de suppression effective
