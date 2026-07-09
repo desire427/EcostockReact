@@ -72,27 +72,6 @@ function AjouterPro({ onClose }) {
             </select>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-300">Seuil d'alerte</label>
-              <input
-                type="text"
-                required
-                placeholder="ex: 10 unités"
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-slate-500"
-              />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-300">Emplacement</label>
-              <input
-                type="text"
-                required
-                placeholder="ex: Étagère B-12"
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-slate-500"
-              />
-            </div>
-          </div>
-
           <div className="mt-6 flex justify-end gap-3 pt-4 border-t border-slate-800">
             <button
               type="button"
