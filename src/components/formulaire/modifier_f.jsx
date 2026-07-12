@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import apiClient from '../api/axios.js';
 
-function ModifierF({ type = 'produit', onClose }) {
+function ModifierF({ type = 'produit', onClose, onSuccess, warehouseId, warehouseData: initialWarehouse }) {
   const normalizedType = String(type || '').toLowerCase().trim();
   const isProduct = ['produit', 'product', 'produits'].includes(normalizedType);
 
-  // State pour pré-remplir les données de démonstration de manière modifiable
+  // Produit : données de démonstration inchangées (géré par Bassirou)
   const [productData, setProductData] = useState({
     name: 'Produit A',
     quantity: '84 unités',
@@ -14,17 +15,47 @@ function ModifierF({ type = 'produit', onClose }) {
     location: 'Étagère B-12'
   });
 
+  // ── Entrepôt : pré-rempli avec les données réelles passées en props ──
   const [warehouseData, setWarehouseData] = useState({
-    name: 'Entrepôt principal',
-    location: 'Quartier central',
-    capacity: '4 200 m²',
-    responsable: 'Jean M.'
+    name: initialWarehouse?.name ?? '',
+    location: initialWarehouse?.location ?? '',
+    capacity: initialWarehouse?.capacity ?? '',
   });
 
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logique de modification
-    onClose();
+    setError('');
+
+    // ── Branche produit : logique non modifiée ──
+    if (isProduct) {
+      onClose();
+      return;
+    }
+
+    // ── Branche entrepôt : appel PATCH réel ──
+    setLoading(true);
+    try {
+      await apiClient.patch(`/warehouse/${warehouseId}/`, {
+        name: warehouseData.name,
+        location: warehouseData.location,
+        capacity: Number(warehouseData.capacity),
+      });
+      if (onSuccess) onSuccess();
+      onClose();
+    } catch (err) {
+      const detail = err.response?.data;
+      if (detail && typeof detail === 'object') {
+        const messages = Object.values(detail).flat().join(' ');
+        setError(messages || 'Une erreur est survenue.');
+      } else {
+        setError('Impossible de modifier l\'entrepôt. Réessayez.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -125,28 +156,25 @@ function ModifierF({ type = 'produit', onClose }) {
                 />
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-4 sm:grid-cols-1">
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-300">Capacité</label>
+                  <label className="mb-2 block text-sm font-medium text-slate-300">Capacité (m²)</label>
                   <input
-                    type="text"
+                    type="number"
                     required
+                    min="1"
                     value={warehouseData.capacity}
                     onChange={(e) => setWarehouseData({ ...warehouseData, capacity: e.target.value })}
                     className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-slate-500"
                   />
                 </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-300">Responsable</label>
-                  <input
-                    type="text"
-                    required
-                    value={warehouseData.responsable}
-                    onChange={(e) => setWarehouseData({ ...warehouseData, responsable: e.target.value })}
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-slate-500"
-                  />
-                </div>
               </div>
+
+              {error && (
+                <p className="rounded-xl border border-red-800 bg-red-950/40 px-4 py-3 text-sm text-red-400">
+                  {error}
+                </p>
+              )}
             </>
           )}
 
@@ -160,13 +188,10 @@ function ModifierF({ type = 'produit', onClose }) {
             </button>
             <button
               type="submit"
-              className={`rounded-xl px-4 py-2.5 text-sm font-medium transition ${
-                isProduct
-                  ? 'bg-white text-slate-900 hover:bg-slate-200'
-                  : 'bg-white text-slate-900 hover:bg-slate-200'
-              }`}
+              disabled={loading}
+              className="rounded-xl px-4 py-2.5 text-sm font-medium transition bg-white text-slate-900 hover:bg-slate-200 disabled:opacity-60"
             >
-              Enregistrer
+              {loading ? 'Enregistrement…' : 'Enregistrer'}
             </button>
           </div>
         </form>

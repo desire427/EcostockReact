@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import apiClient from '../api/axios.js';
 
-function SupprimerF({ type = 'produit', onClose }) {
+function SupprimerF({ type = 'produit', onClose, onSuccess, warehouseId }) {
   const normalizedType = String(type || '').toLowerCase().trim();
   const isProduct = ['produit', 'product', 'produits'].includes(normalizedType);
 
-  const handleDelete = () => {
-    // Logique de suppression effective
-    onClose();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleDelete = async () => {
+    setError('');
+
+    // ── Branche produit : logique non modifiée (gérée par l'ami) ──
+    if (isProduct) {
+      onClose();
+      return;
+    }
+
+    // ── Branche entrepôt : appel DELETE réel ──
+    setLoading(true);
+    try {
+      await apiClient.delete(`/warehouse/${warehouseId}/`);
+      if (onSuccess) onSuccess();
+      onClose();
+      navigate('/entrepots');
+    } catch {
+      setError('Impossible de supprimer l\'entrepôt. Réessayez.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -18,10 +42,16 @@ function SupprimerF({ type = 'produit', onClose }) {
           </svg>
           <h3 className="text-xl font-semibold text-white">Confirmer la suppression</h3>
         </div>
-        
+
         <p className="text-sm text-slate-400">
           Êtes-vous sûr de vouloir supprimer ce{isProduct ? ' produit' : 't entrepôt'} ? Cette action est irréversible et retirera définitivement les données du système.
         </p>
+
+        {error && (
+          <p className="mt-4 rounded-xl border border-red-800 bg-red-950/40 px-4 py-3 text-sm text-red-400">
+            {error}
+          </p>
+        )}
 
         <div className="mt-6 flex justify-end gap-3 pt-4 border-t border-slate-800">
           <button
@@ -34,9 +64,10 @@ function SupprimerF({ type = 'produit', onClose }) {
           <button
             type="button"
             onClick={handleDelete}
-            className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition"
+            disabled={loading}
+            className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition disabled:opacity-60"
           >
-            Supprimer
+            {loading ? 'Suppression…' : 'Supprimer'}
           </button>
         </div>
       </div>

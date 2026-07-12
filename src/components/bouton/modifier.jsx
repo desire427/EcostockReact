@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ModifierF from '../formulaire/modifier_f.jsx';
 
-function Modifier({ type = 'produit', onClick, label = 'Modifier', className }) {
+function Modifier({ type = 'produit', onClick, label = 'Modifier', className, warehouseId, warehouseData, onSuccess }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleButtonClick = (e) => {
@@ -20,7 +20,13 @@ function Modifier({ type = 'produit', onClick, label = 'Modifier', className }) 
       </button>
 
       {isOpen && (
-        <ModifierF type={type} onClose={() => setIsOpen(false)} />
+        <ModifierF
+          type={type}
+          onClose={() => setIsOpen(false)}
+          onSuccess={onSuccess}
+          warehouseId={warehouseId}
+          warehouseData={warehouseData}
+        />
       )}
     </>
   );

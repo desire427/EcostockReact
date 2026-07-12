@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Connexion from '../bouton/connexion.jsx';
+import apiClient from '../api/axios.js';
 
 function Login() {
   const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate('/accueil');
+    setError('');
+    setLoading(true);
+
+    const form = event.currentTarget;
+    const username = form.username.value.trim();
+    const password = form.password.value;
+
+    try {
+      const { data } = await apiClient.post('/token', { username, password });
+      localStorage.setItem('access_token', data.access);
+      localStorage.setItem('refresh_token', data.refresh);
+      navigate('/accueil');
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setError('Nom d\'utilisateur ou mot de passe incorrect.');
+      } else {
+        setError('Impossible de contacter le serveur. Réessayez plus tard.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,7 +67,7 @@ function Login() {
 
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div>
-                <label for="username" className="mb-2 block text-sm font-medium text-slate-700">Nom d'utilisateur</label>
+                <label htmlFor="username" className="mb-2 block text-sm font-medium text-slate-700">Nom d'utilisateur</label>
                 <input
                   id="username"
                   name="username"
@@ -56,7 +79,7 @@ function Login() {
               </div>
 
               <div>
-                <label for="password" className="mb-2 block text-sm font-medium text-slate-700">Mot de passe</label>
+                <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-700">Mot de passe</label>
                 <input
                   id="password"
                   name="password"
@@ -75,12 +98,18 @@ function Login() {
                 <a href="#" className="font-medium text-slate-700 transition hover:text-slate-900">Mot de passe oublié ?</a>
               </div>
 
-              <Connexion />
+              {error && (
+                <p className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
+                  {error}
+                </p>
+              )}
+
+              <Connexion label={loading ? 'Connexion…' : 'Se connecter'} />
             </form>
 
             <div className="mt-8 border-t border-slate-200 pt-6 text-sm text-slate-600">
               <p>
-                En cas de problème d’accès, veuillez contacter l’administrateur du système.
+                En cas de problème d'accès, veuillez contacter l'administrateur du système.
               </p>
             </div>
           </div>
