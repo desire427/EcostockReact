@@ -9,8 +9,25 @@ import apiClient from '../api/axios.js';
 
 function Entrepots() {
     const [warehouses, setWarehouses] = useState([]);
+    const [warehouseProducts, setWarehouseProducts] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+    const getConnectedUserName = () => {
+        const storedUser = localStorage.getItem('current_user');
+        if (storedUser) return storedUser;
+
+        const token = localStorage.getItem('access_token');
+        if (!token) return 'Utilisateur';
+
+        try {
+            const payload = token.split('.')[1];
+            const decoded = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+            return decoded.username || decoded.user_name || 'Utilisateur';
+        } catch {
+            return 'Utilisateur';
+        }
+    };
 
     const fetchWarehouses = async () => {
         setLoading(true);
@@ -18,6 +35,19 @@ function Entrepots() {
         try {
             const { data } = await apiClient.get('/warehouse/');
             setWarehouses(data);
+
+            const counts = {};
+            const promises = data.map(async (warehouse) => {
+                try {
+                    const response = await apiClient.get(`/products/?warehouse=${warehouse.id}`);
+                    counts[warehouse.id] = response.data?.length ?? 0;
+                } catch {
+                    counts[warehouse.id] = 0;
+                }
+            });
+
+            await Promise.all(promises);
+            setWarehouseProducts(counts);
         } catch {
             setError('Impossible de charger les entrepôts.');
         } finally {
@@ -71,8 +101,8 @@ function Entrepots() {
                             location={warehouse.location}
                             capacity={`${warehouse.capacity} m²`}
                             occupation={warehouse.occupation ?? 0}
-                            responsable={warehouse.responsable ?? '—'}
-                            products={String(warehouse.product_count ?? 0)}
+                            responsable={warehouse.responsible || warehouse.responsable || getConnectedUserName()}
+                            products={String(warehouseProducts[warehouse.id] ?? 0)}
                             actionLabel="Voir les détails"
                             actionHref={`/entrepots/${warehouse.id}`}
                         />

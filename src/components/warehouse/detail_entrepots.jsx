@@ -18,6 +18,22 @@ function DetailEntrepots() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    const getConnectedUserName = () => {
+        const storedUser = localStorage.getItem('current_user');
+        if (storedUser) return storedUser;
+
+        const token = localStorage.getItem('access_token');
+        if (!token) return 'Utilisateur';
+
+        try {
+            const payload = token.split('.')[1];
+            const decoded = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+            return decoded.username || decoded.user_name || 'Utilisateur';
+        } catch {
+            return 'Utilisateur';
+        }
+    };
+
     const fetchData = async () => {
         setLoading(true);
         setError('');
@@ -59,11 +75,13 @@ function DetailEntrepots() {
         );
     }
 
+    const responsableName = warehouse.responsable || warehouse.responsible || getConnectedUserName();
+
     const infoItems = [
         { label: 'Nom', value: warehouse.name },
         { label: 'Localisation', value: warehouse.location },
         { label: 'Capacité', value: `${warehouse.capacity} m²` },
-        { label: 'Responsable', value: warehouse.responsable ?? '—' },
+        { label: 'Responsable', value: responsableName },
     ];
 
     const productItems = products.map((p) => ({

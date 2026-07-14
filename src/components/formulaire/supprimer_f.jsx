@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/axios.js';
 
-function SupprimerF({ type = 'produit', onClose, onSuccess, warehouseId }) {
+function SupprimerF({ type = 'produit', onClose, onSuccess, warehouseId, productId }) {
   const normalizedType = String(type || '').toLowerCase().trim();
   const isProduct = ['produit', 'product', 'produits'].includes(normalizedType);
 
@@ -13,13 +13,26 @@ function SupprimerF({ type = 'produit', onClose, onSuccess, warehouseId }) {
   const handleDelete = async () => {
     setError('');
 
-    // ── Branche produit : logique non modifiée (gérée par l'ami) ──
     if (isProduct) {
-      onClose();
+      if (!productId) {
+        setError('Impossible d’identifier le produit à supprimer.');
+        return;
+      }
+
+      setLoading(true);
+      try {
+        await apiClient.delete(`/products/${productId}/`);
+        if (onSuccess) onSuccess();
+        onClose();
+        navigate('/produits');
+      } catch {
+        setError('Impossible de supprimer le produit. Réessayez.');
+      } finally {
+        setLoading(false);
+      }
       return;
     }
 
-    // ── Branche entrepôt : appel DELETE réel ──
     setLoading(true);
     try {
       await apiClient.delete(`/warehouse/${warehouseId}/`);

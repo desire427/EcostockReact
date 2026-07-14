@@ -1,41 +1,100 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import apiClient from '../api/axios.js';
 
-function ModifierF({ type = 'produit', onClose, onSuccess, warehouseId, warehouseData: initialWarehouse }) {
+function ModifierF({ type = 'produit', onClose, onSuccess, warehouseId, warehouseData: initialWarehouse, productId, productData: initialProductData }) {
   const normalizedType = String(type || '').toLowerCase().trim();
   const isProduct = ['produit', 'product', 'produits'].includes(normalizedType);
 
-  // Produit : données de démonstration inchangées (géré par Bassirou)
   const [productData, setProductData] = useState({
-    name: 'Produit A',
-    quantity: '84 unités',
-    expiration: '15/09/2026',
-    warehouse: 'Principal',
-    alertThreshold: '10 unités',
-    location: 'Étagère B-12'
+    name: initialProductData?.name ?? '',
+    quantity: initialProductData?.quantity ?? '',
+    expiration: initialProductData?.expiration_date ?? '',
+    warehouse: initialProductData?.warehouse ?? '',
   });
 
-  // ── Entrepôt : pré-rempli avec les données réelles passées en props ──
   const [warehouseData, setWarehouseData] = useState({
     name: initialWarehouse?.name ?? '',
     location: initialWarehouse?.location ?? '',
     capacity: initialWarehouse?.capacity ?? '',
   });
 
+  const [warehouses, setWarehouses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [warehousesLoading, setWarehousesLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (initialProductData) {
+      setProductData({
+        name: initialProductData.name ?? '',
+        quantity: initialProductData.quantity ?? '',
+        expiration: initialProductData.expiration_date ?? '',
+        warehouse: initialProductData.warehouse ?? '',
+      });
+    }
+  }, [initialProductData]);
+
+  useEffect(() => {
+    if (initialWarehouse) {
+      setWarehouseData({
+        name: initialWarehouse.name ?? '',
+        location: initialWarehouse.location ?? '',
+        capacity: initialWarehouse.capacity ?? '',
+      });
+    }
+  }, [initialWarehouse]);
+
+  useEffect(() => {
+    const loadWarehouses = async () => {
+      if (!isProduct) return;
+      setWarehousesLoading(true);
+      try {
+        const response = await apiClient.get('/warehouse/');
+        setWarehouses(response.data || []);
+      } catch {
+        setWarehouses([]);
+      } finally {
+        setWarehousesLoading(false);
+      }
+    };
+
+    loadWarehouses();
+  }, [isProduct]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    // ── Branche produit : logique non modifiée ──
     if (isProduct) {
-      onClose();
+      if (!productId) {
+        setError('Impossible d’identifier le produit à modifier.');
+        return;
+      }
+
+      setLoading(true);
+      try {
+        await apiClient.patch(`/products/${productId}/`, {
+          name: productData.name,
+          quantity: Number(productData.quantity),
+          expiration_date: productData.expiration,
+          warehouse: productData.warehouse ? Number(productData.warehouse) : initialProductData?.warehouse,
+        });
+        if (onSuccess) onSuccess();
+        onClose();
+      } catch (err) {
+        const detail = err.response?.data;
+        if (detail && typeof detail === 'object') {
+          const messages = Object.values(detail).flat().join(' ');
+          setError(messages || 'Une erreur est survenue.');
+        } else {
+          setError('Impossible de modifier le produit. Réessayez.');
+        }
+      } finally {
+        setLoading(false);
+      }
       return;
     }
 
-    // ── Branche entrepôt : appel PATCH réel ──
     setLoading(true);
     try {
       await apiClient.patch(`/warehouse/${warehouseId}/`, {
@@ -92,15 +151,14 @@ function ModifierF({ type = 'produit', onClose, onSuccess, warehouseId, warehous
                     className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-slate-500"
                   />
                 </div>
-                <div>
-                </div>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-2 block text-sm font-medium text-slate-300">Quantité</label>
                   <input
-                    type="text"
+                    type="number"
+                    min="0"
                     required
                     value={productData.quantity}
                     onChange={(e) => setProductData({ ...productData, quantity: e.target.value })}
@@ -110,7 +168,7 @@ function ModifierF({ type = 'produit', onClose, onSuccess, warehouseId, warehous
                 <div>
                   <label className="mb-2 block text-sm font-medium text-slate-300">Date d'expiration</label>
                   <input
-                    type="text"
+                    type="date"
                     required
                     value={productData.expiration}
                     onChange={(e) => setProductData({ ...productData, expiration: e.target.value })}
@@ -125,10 +183,17 @@ function ModifierF({ type = 'produit', onClose, onSuccess, warehouseId, warehous
                   value={productData.warehouse}
                   onChange={(e) => setProductData({ ...productData, warehouse: e.target.value })}
                   className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-slate-500"
+                  disabled={warehousesLoading}
                 >
-                  <option value="Principal">Entrepôt principal</option>
-                  <option value="Secondaire">Entrepôt secondaire</option>
-                  <option value="Central">Entrepôt central</option>
+                  {warehousesLoading ? (
+                    <option value="">Chargement des entrepôts…</option>
+                  ) : warehouses.length > 0 ? (
+                    warehouses.map((warehouse) => (
+                      <option key={warehouse.id} value={warehouse.id}>{warehouse.name}</option>
+                    ))
+                  ) : (
+                    <option value="">Aucun entrepôt disponible</option>
+                  )}
                 </select>
               </div>
             </>
@@ -169,13 +234,13 @@ function ModifierF({ type = 'produit', onClose, onSuccess, warehouseId, warehous
                   />
                 </div>
               </div>
-
-              {error && (
-                <p className="rounded-xl border border-red-800 bg-red-950/40 px-4 py-3 text-sm text-red-400">
-                  {error}
-                </p>
-              )}
             </>
+          )}
+
+          {error && (
+            <p className="rounded-xl border border-red-800 bg-red-950/40 px-4 py-3 text-sm text-red-400">
+              {error}
+            </p>
           )}
 
           <div className="mt-6 flex justify-end gap-3 pt-4 border-t border-slate-800">

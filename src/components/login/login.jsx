@@ -21,6 +21,7 @@ function Login() {
       const { data } = await apiClient.post('/token', { username, password });
       localStorage.setItem('access_token', data.access);
       localStorage.setItem('refresh_token', data.refresh);
+      localStorage.setItem('current_user', username);
       navigate('/accueil');
     } catch (err) {
       if (err.response?.status === 401) {

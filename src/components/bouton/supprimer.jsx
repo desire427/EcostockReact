@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SupprimerF from '../formulaire/supprimer_f.jsx';
 
-function Supprimer({ type = 'produit', onClick, label = 'Supprimer', warehouseId, onSuccess }) {
+function Supprimer({ type = 'produit', onClick, label = 'Supprimer', warehouseId, onSuccess, productId }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleButtonClick = (e) => {
@@ -25,6 +25,7 @@ function Supprimer({ type = 'produit', onClick, label = 'Supprimer', warehouseId
           onClose={() => setIsOpen(false)}
           onSuccess={onSuccess}
           warehouseId={warehouseId}
+          productId={productId}
         />
       )}
     </>

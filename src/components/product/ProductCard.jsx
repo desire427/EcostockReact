@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom'
 import VoirDetails from '../bouton/voirdetails.jsx'
 
-function ProductCard({ title, category, label, labelClass, quantity, expiration, warehouse }) {
+function ProductCard({ productId, title, category, label, labelClass, quantity, expiration, warehouse }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950">
       <div className="p-5">
@@ -26,7 +25,7 @@ function ProductCard({ title, category, label, labelClass, quantity, expiration,
             <span className="font-medium text-slate-200">{warehouse}</span>
           </div>
         </div>
-        <VoirDetails to="/detail_produits.html" variant="primary" />
+        <VoirDetails to={`/detail_produits/${productId}`} variant="primary" />
       </div>
     </div>
   )

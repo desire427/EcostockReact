@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Deconnexion from '../bouton/deconnexion.jsx';
 
 function Sidebar() {
+  const [userName, setUserName] = useState('Utilisateur');
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('current_user');
+    if (storedUser) {
+      setUserName(storedUser);
+      return;
+    }
+
+    const token = localStorage.getItem('access_token');
+    if (!token) return;
+
+    try {
+      const payload = token.split('.')[1];
+      const decoded = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+      setUserName(decoded.username || decoded.user_name || 'Utilisateur');
+    } catch {
+      setUserName('Utilisateur');
+    }
+  }, []);
+
   return (
     <aside className="hidden w-72 flex-col justify-between border-r border-slate-800 bg-slate-900 p-6 lg:flex">
       <div>
@@ -51,8 +72,7 @@ function Sidebar() {
         </nav>
       </div>
       <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
-        {/* nom de l'utilisateur connecter */}
-        <p className='text-slate-400'>Bonjour, Jean M.</p>
+        <p className='text-slate-400'>Bonjour, {userName}</p>
         <Deconnexion />
       </div>
     </aside>
